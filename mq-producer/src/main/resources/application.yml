@@ -1,0 +1,8 @@
+server:
+  port: 8082
+
+
+rocketmq:
+  name-server: 172.23.120.69:9876
+  producer:
+    group: counter-producer-group

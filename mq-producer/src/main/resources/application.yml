@@ -3,6 +3,6 @@ server:
 
 
 rocketmq:
-  name-server: localhost:9876
+  name-server: namesrv:9876
   producer:
     group: counter-producer-group

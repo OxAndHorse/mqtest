@@ -3,7 +3,7 @@ version: '3.8'
 services:
   namesrv:
     image: apache/rocketmq:5.3.2
-    container_name: rmqnamesrv
+    container_name: rmq-namesrv
     ports:
       - "9876:9876"
     command: sh mqnamesrv
@@ -16,7 +16,7 @@ services:
       - rocketmq-network
   broker:
     image: apache/rocketmq:5.3.2
-    container_name: rocketmq-broker
+    container_name: rmq-broker
     ports:
       - "10911:10911"   # broker
       - "10909:10909"   # remoting
@@ -30,6 +30,42 @@ services:
       - ./data/store:/home/rocketmq/store
       - ./broker.conf:/home/rocketmq/broker.conf
     command: sh mqbroker -n namesrv:9876 -c /home/rocketmq/broker.conf
+    networks:
+      - rocketmq-network
+
+  mysql:
+    image: 172.31.215.191:5000/mysql:8.0.39
+    container_name: rmq-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: jiaze1234
+      MYSQL_DATABASE: mqtest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysqldata:/var/lib/mysql
+    networks:
+      - rocketmq-network
+  
+  mqproducer:
+    image: mq-producer:1.0 
+    container_name: rmq-producer
+    depends_on:
+      - namesrv
+      - mysql
+    ports:
+      - "20082:8082"
+    networks:
+      - rocketmq-network
+
+  mqconsumer:
+    image: mq-consumer:1.0 
+    container_name: rmq-consumer-0
+    depends_on:
+      - namesrv
+      - mysql
+    ports:
+      - "20081:8081"
     networks:
       - rocketmq-network
 

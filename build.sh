@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # 遇到错误就退出
+set -e  
 
 # 配置变量（可按需修改）
 PRODUCER_DIR="mq-producer"

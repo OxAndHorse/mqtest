@@ -79,7 +79,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.example.mqconsumer.MqconsumerApplication</mainClass>
-                    <skip>true</skip>
+                    <!-- <skip>true</skip> -->
                 </configuration>
                 <executions>
                     <execution>

@@ -12,10 +12,6 @@ public class MessageProducer {
 
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
-    @PostConstruct
-    public void init() {
-        System.out.println("[RocketMQ Producer] 初始化完成，连接成功！");
-    }
 
     public void sendCounterMessage() {
         rocketMQTemplate.convertAndSend("counter-topic", "increment");

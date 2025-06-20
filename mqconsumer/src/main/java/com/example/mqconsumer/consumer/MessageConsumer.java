@@ -21,11 +21,6 @@ public class MessageConsumer implements RocketMQListener<String> {
     @Autowired
     private CounterRepository counterRepository;
 
-    @PostConstruct
-    public void onInit() {
-        System.out.println("[RocketMQ Consumer] 启动成功，已连接并监听 topic：counter-topic");
-    }
-
     @Override
     @Transactional
     public void onMessage(String message) {
